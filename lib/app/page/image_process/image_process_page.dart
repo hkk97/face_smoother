@@ -83,10 +83,10 @@ class _ImageProcessState extends State<ImageProcessPage> with AfterLayoutMixin {
                     ),
                     ExampleWidget(
                       onTap: (demoImg) async {
-                        ByteData beforeImgByte =
-                            await rootBundle.load(demoImg.beforeImgSrc);
-                        ByteData afterImgByte =
-                            await rootBundle.load(demoImg.afterImgSrc);
+                        ByteData beforeImgByte = await rootBundle
+                            .load('assets/${demoImg.beforeImgSrc}');
+                        ByteData afterImgByte = await rootBundle
+                            .load('assets/${demoImg.afterImgSrc}');
                         final beforeImgBuffer =
                             beforeImgByte.buffer.asUint8List();
                         final afterImgBuffer =

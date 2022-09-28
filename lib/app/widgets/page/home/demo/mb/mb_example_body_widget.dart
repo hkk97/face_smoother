@@ -31,10 +31,10 @@ class MBExampleBodyWidget extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 15.0),
                     child: ExampleBodyWidget(
                       onTap: (demoImg) async {
-                        ByteData beforeImgByte =
-                            await rootBundle.load(demoImg.beforeImgSrc);
-                        ByteData afterImgByte =
-                            await rootBundle.load(demoImg.afterImgSrc);
+                        ByteData beforeImgByte = await rootBundle
+                            .load('assets/${demoImg.beforeImgSrc}');
+                        ByteData afterImgByte = await rootBundle
+                            .load('assets/${demoImg.afterImgSrc}');
                         final beforeImgBuffer =
                             beforeImgByte.buffer.asUint8List();
                         final afterImgBuffer =
@@ -75,10 +75,10 @@ class MBExampleBodyWidget extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 15.0),
                     child: ExampleBodyWidget(
                       onTap: (demoImg) async {
-                        ByteData beforeImgByte =
-                            await rootBundle.load(demoImg.beforeImgSrc);
-                        ByteData afterImgByte =
-                            await rootBundle.load(demoImg.afterImgSrc);
+                        ByteData beforeImgByte = await rootBundle
+                            .load('assets/${demoImg.beforeImgSrc}');
+                        ByteData afterImgByte = await rootBundle
+                            .load('assets/${demoImg.afterImgSrc}');
                         final beforeImgBuffer =
                             beforeImgByte.buffer.asUint8List();
                         final afterImgBuffer =

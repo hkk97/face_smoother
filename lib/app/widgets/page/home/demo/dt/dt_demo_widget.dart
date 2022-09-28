@@ -214,11 +214,13 @@ class DTDemoWidget extends StatelessWidget {
                                     padding: const EdgeInsets.only(left: 15.0),
                                     child: ExampleBodyWidget(
                                       onTap: (demoImg) async {
+                                        EnvImgWidget(src: demoImg.beforeImgSrc);
                                         ByteData beforeImgByte =
-                                            await rootBundle
-                                                .load(demoImg.beforeImgSrc);
-                                        ByteData afterImgByte = await rootBundle
-                                            .load(demoImg.afterImgSrc);
+                                            await rootBundle.load(
+                                                'assets/${demoImg.beforeImgSrc}');
+                                        ByteData afterImgByte =
+                                            await rootBundle.load(
+                                                'assets/${demoImg.afterImgSrc}');
                                         final beforeImgBuffer =
                                             beforeImgByte.buffer.asUint8List();
                                         final afterImgBuffer =
