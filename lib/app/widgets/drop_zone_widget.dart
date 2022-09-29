@@ -113,59 +113,63 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
   }
 
   Future<void> uploadedFile(dynamic event) async {
-    await showOverlayLoading(context: context);
-    late ProcessImgElement processImgElement;
-    late ProcessImg processImg;
-    html.ImageElement? imgElement;
-    Uint8List? uint8list;
-    html.File file = event;
-    DateTime lastModifiedDate = file.lastModifiedDate;
-    String fileName = file.name;
-    int fileSize = file.size;
-    final url = await controller.createFileUrl(event);
-    final fileMine = await controller.getFileMIME(event);
-    final isFileValid = FileUtil().isAllowedImgType(fileMine);
-    if (isFileValid) {
-      var blob = BlobImage(file, name: file.name).blob;
-      var r = html.FileReader();
-      r.readAsArrayBuffer(blob);
-      r.onLoad.listen((e) {
-        var data = r.result;
-        uint8list = data as Uint8List?;
+    try {
+      await showOverlayLoading(context: context);
+      late ProcessImgElement processImgElement;
+      late ProcessImg processImg;
+      html.ImageElement? imgElement;
+      Uint8List? uint8list;
+      html.File file = event;
+      DateTime lastModifiedDate = file.lastModifiedDate;
+      String fileName = file.name;
+      int fileSize = file.size;
+      final url = await controller.createFileUrl(event);
+      final fileMine = await controller.getFileMIME(event);
+      final isFileValid = FileUtil().isAllowedImgType(fileMine);
+      if (isFileValid) {
+        var blob = BlobImage(file, name: file.name).blob;
+        var r = html.FileReader();
+        r.readAsArrayBuffer(blob);
+        r.onLoad.listen((e) {
+          var data = r.result;
+          uint8list = data as Uint8List?;
+          processImg = ProcessImg(
+            createdAt: DateTime.now(),
+            fileLastModifiedDate: lastModifiedDate,
+            fileName: fileName,
+            fileSize: fileSize,
+            beforeImg: isFileValid ? uint8list! : null,
+            isValidMedia: isFileValid,
+          );
+        });
+        imgElement = html.ImageElement(src: url);
+        imgElement.onLoad.first.then((element) async {
+          processImgElement = ProcessImgElement(
+            imgElement: isFileValid ? imgElement : null,
+            processImg: processImg,
+          );
+          await AppSer().dbSer().imgDBSer().write(img: processImg);
+          widget.onDroppedFile(processImgElement);
+          await OverlaySer().removeOverlay('loadingOverlay');
+        });
+      } else {
         processImg = ProcessImg(
           createdAt: DateTime.now(),
           fileLastModifiedDate: lastModifiedDate,
           fileName: fileName,
           fileSize: fileSize,
-          beforeImg: isFileValid ? uint8list! : null,
-          isValidMedia: isFileValid,
+          isValidMedia: false,
         );
-      });
-      imgElement = html.ImageElement(src: url);
-      imgElement.onLoad.first.then((element) async {
-        processImgElement = ProcessImgElement(
-          imgElement: isFileValid ? imgElement : null,
+        final processImgElement = ProcessImgElement(
+          imgElement: null,
           processImg: processImg,
         );
         await AppSer().dbSer().imgDBSer().write(img: processImg);
         widget.onDroppedFile(processImgElement);
         await OverlaySer().removeOverlay('loadingOverlay');
-      });
-    } else {
-      processImg = ProcessImg(
-        createdAt: DateTime.now(),
-        fileLastModifiedDate: lastModifiedDate,
-        fileName: fileName,
-        fileSize: fileSize,
-        isValidMedia: false,
-      );
-      final processImgElement = ProcessImgElement(
-        imgElement: null,
-        processImg: processImg,
-      );
-      await AppSer().dbSer().imgDBSer().write(img: processImg);
-      widget.onDroppedFile(processImgElement);
-      await OverlaySer().removeOverlay('loadingOverlay');
+      }
+    } catch (e) {
+      await showErroeOverlay(context: context, error: e.toString());
     }
   }
 

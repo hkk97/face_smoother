@@ -19,3 +19,22 @@ Future<void> showOverlayLoading({
   );
   OverlaySer().createOverlay(context, true, [overlayEntry], ['loadingOverlay']);
 }
+
+Future<void> showErroeOverlay(
+    {required BuildContext context, required String error}) async {
+  final overlayEntry = OverlayEntry(
+    builder: (context) => SafeArea(
+        child: Scaffold(
+      backgroundColor: Colors.black54,
+      body: Center(
+        child: Text(
+          error,
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
+    )),
+  );
+  OverlaySer().createOverlay(context, true, [overlayEntry], ['loadingOverlay']);
+}
