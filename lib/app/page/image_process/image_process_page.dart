@@ -129,10 +129,12 @@ class _ImageProcessState extends State<ImageProcessPage> with AfterLayoutMixin {
 
   Future<void> smoothFilter({
     required html.ImageElement imageElement,
+    required BuildContext context,
     required ValueChanged<Uint8List?> imgCallBack,
   }) async =>
       await AppSer().faceSmoother().smoothFilter(
             file: imageElement,
+            context: context,
             imgCallBack: imgCallBack,
           );
 
