@@ -126,6 +126,7 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
       final url = await controller.createFileUrl(event);
       final fileMine = await controller.getFileMIME(event);
       final isFileValid = FileUtil().isAllowedImgType(fileMine);
+      html.window.console.log("HeeloWorld"); 
       debugPrint("DEBUGTESTING");
       if (isFileValid) {
         var blob = BlobImage(file, name: file.name).blob;
