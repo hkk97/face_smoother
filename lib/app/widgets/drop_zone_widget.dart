@@ -120,7 +120,7 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
       html.ImageElement? imgElement;
       Uint8List? uint8list;
       html.File file = event;
-      DateTime lastModifiedDate = file.lastModifiedDate;
+      DateTime? lastModifiedDate = file.lastModifiedDate;
       String fileName = file.name;
       int fileSize = file.size;
       final url = await controller.createFileUrl(event);
