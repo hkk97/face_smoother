@@ -1,5 +1,7 @@
 import 'dart:html' as html;
 import 'dart:typed_data';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:flutter_web_smoother_plguin_example/app/models/img_process/img_process.dart';
@@ -31,16 +33,20 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
         children: [
           DropzoneView(
             onCreated: (controller) => this.controller = controller,
-            onDrop: uploadedFile,
+            onDrop: onDropFile,
             onHover: () => setState(() => highlight = true),
             onLeave: () => setState(() => highlight = false),
           ),
           Positioned.fill(
             child: GestureDetector(
               onTap: () async {
-                final events = await controller.pickFiles();
-                if (events.isEmpty) return;
-                await uploadedFile(events.first);
+
+                FilePickerResult? res = await FilePicker.platform.pickFiles();
+                if (res != null) {
+                  PlatformFile file = res.files.first;
+                  await onPickFile(file);
+                }
+
               },
               child: Container(
                 color: Colors.transparent,
@@ -112,33 +118,40 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
     );
   }
 
-  Future<void> uploadedFile(dynamic event) async {
-    try {
+  Future<void> onPickFile(PlatformFile file) async {
+    final imgElement = html.ImageElement(src: file.path);
+    final processImg = ProcessImg(
+            createdAt: DateTime.now(),
+            fileLastModifiedDate: null,
+            fileName: file.name,
+            fileSize: file.size,
+            beforeImg: file.bytes,
+            isValidMedia: true, // Pre assume true
+          );
+    final processImgElement = ProcessImgElement(
+      imgElement: imgElement,
+      processImg: processImg,
+    );
+    await AppSer().dbSer().imgDBSer().write(img: processImg);
+    widget.onDroppedFile(processImgElement);
+    await OverlaySer().removeOverlay('loadingOverlay');
+  }
+
+  
+
+  Future<void> onDropFile(dynamic event) async {
       await showOverlayLoading(context: context);
       late ProcessImgElement processImgElement;
       late ProcessImg processImg;
       html.ImageElement? imgElement;
       Uint8List? uint8list;
       html.File file = event;
-      debugPrint("[UPLOADEDFILE]:${event.runtimeType.toString()}");
       DateTime? lastModifiedDate = file.lastModifiedDate;
-      debugPrint("[UPLOADEDFILE]:${lastModifiedDate.toString()}");
-
       String fileName = file.name;
-      debugPrint("[UPLOADEDFILE]:${fileName.toString()}");
-
       int fileSize = file.size;
-      debugPrint("[UPLOADEDFILE]:${fileSize.toString()}");
-
       final url = await controller.createFileUrl(event);
-      debugPrint("[UPLOADEDFILE]:${url.toString()}");
-
       final fileMine = await controller.getFileMIME(event);
-      debugPrint("[UPLOADEDFILE]:${fileMine.toString()}");
-
       final isFileValid = FileUtil().isAllowedImgType(fileMine);
-      debugPrint("[UPLOADEDFILE]:${isFileValid.toString()}");
-
       if (isFileValid) {
         var blob = BlobImage(file, name: file.name).blob;
         var r = html.FileReader();
@@ -181,9 +194,7 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
         widget.onDroppedFile(processImgElement);
         await OverlaySer().removeOverlay('loadingOverlay');
       }
-    } catch (e) {
-      await showErrorOverlay(context: context, error: e.toString());
-    }
+    
   }
 
   Widget buildDecoration({required Widget child}) {
