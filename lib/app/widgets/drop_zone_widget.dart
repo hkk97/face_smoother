@@ -169,7 +169,7 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
         await OverlaySer().removeOverlay('loadingOverlay');
       }
     } catch (e) {
-      await showErroeOverlay(context: context, error: e.toString());
+      await showErrorOverlay(context: context, error: e.toString());
     }
   }
 

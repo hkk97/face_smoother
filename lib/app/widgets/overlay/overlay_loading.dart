@@ -20,7 +20,7 @@ Future<void> showOverlayLoading({
   OverlaySer().createOverlay(context, true, [overlayEntry], ['loadingOverlay']);
 }
 
-Future<void> showErroeOverlay(
+Future<void> showErrorOverlay(
     {required BuildContext context, required String error}) async {
   final overlayEntry = OverlayEntry(
     builder: (context) => SafeArea(
