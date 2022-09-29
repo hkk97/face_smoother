@@ -38,10 +38,9 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
           Positioned.fill(
             child: GestureDetector(
               onTap: () async {
-                debugPrint("controller.pickFiles");
                 final events = await controller.pickFiles();
                 if (events.isEmpty) return;
-                uploadedFile(events.first);
+                await uploadedFile(events.first);
               },
               child: Container(
                 color: Colors.transparent,
@@ -121,14 +120,25 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
       html.ImageElement? imgElement;
       Uint8List? uint8list;
       html.File file = event;
+      debugPrint("[UPLOADEDFILE]:${event.runtimeType.toString()}");
       DateTime? lastModifiedDate = file.lastModifiedDate;
+      debugPrint("[UPLOADEDFILE]:${lastModifiedDate.toString()}");
+
       String fileName = file.name;
+      debugPrint("[UPLOADEDFILE]:${fileName.toString()}");
+
       int fileSize = file.size;
+      debugPrint("[UPLOADEDFILE]:${fileSize.toString()}");
+
       final url = await controller.createFileUrl(event);
+      debugPrint("[UPLOADEDFILE]:${url.toString()}");
+
       final fileMine = await controller.getFileMIME(event);
+      debugPrint("[UPLOADEDFILE]:${fileMine.toString()}");
+
       final isFileValid = FileUtil().isAllowedImgType(fileMine);
-      html.window.console.log("HeeloWorld"); 
-      debugPrint("DEBUGTESTING");
+      debugPrint("[UPLOADEDFILE]:${isFileValid.toString()}");
+
       if (isFileValid) {
         var blob = BlobImage(file, name: file.name).blob;
         var r = html.FileReader();
