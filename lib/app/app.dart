@@ -1,7 +1,3 @@
-import 'dart:collection';
-import 'dart:html';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_web_smoother_plguin_example/app/models/img_process/process_img_element.dart';
 import 'package:flutter_web_smoother_plguin_example/app/page/home/home_page.dart';
@@ -41,12 +37,6 @@ class _AppState extends State<App> {
         },
       ),
       GoRoute(
-        path: '/privacy',
-        builder: (context, state) {
-          return const PrivacyPage();
-        },
-      ),
-      GoRoute(
         path: '/image_process',
         builder: (context, state) {
           final processImg = state.extra as ProcessImgElement;
@@ -63,6 +53,7 @@ class _AppState extends State<App> {
     return MaterialApp.router(
       title: appTitle,
       debugShowCheckedModeBanner: false,
+      theme: Theme.of(context).copyWith(primaryColor: Colors.white),
       routerConfig: _router,
     );
   }

@@ -16,7 +16,7 @@ class MBDropFileWidget extends StatelessWidget {
     final onVertical = MediaQuery.of(context).size.width < 650;
     return onVertical
         ? SizedBox(
-            height: 500,
+            height: 380,
             width: MediaQuery.of(context).size.width,
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -25,6 +25,7 @@ class MBDropFileWidget extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(
+                    height: 75,
                     child: EnvImgWidget(
                       src: 'arrow_120x120.png',
                     ),

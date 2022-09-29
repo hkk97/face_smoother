@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_smoother_plguin_example/app/models/img_process/img_process.dart';
 import 'package:flutter_web_smoother_plguin_example/app/models/img_process/process_img_element.dart';
+import 'package:flutter_web_smoother_plguin_example/app/util/file_util.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/common/upload_term_widget.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/page/home/image_process/example_body_widget.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/page/home/image_process/example_hint_widget.dart';
@@ -31,14 +32,10 @@ class MBExampleBodyWidget extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 15.0),
                     child: ExampleBodyWidget(
                       onTap: (demoImg) async {
-                        ByteData beforeImgByte = await rootBundle
-                            .load('assets/${demoImg.beforeImgSrc}');
-                        ByteData afterImgByte = await rootBundle
-                            .load('assets/${demoImg.afterImgSrc}');
-                        final beforeImgBuffer =
-                            beforeImgByte.buffer.asUint8List();
-                        final afterImgBuffer =
-                            afterImgByte.buffer.asUint8List();
+                        final beforeImgBuffer = await FileUtil()
+                            .readRootBundle(demoImg.beforeImgSrc);
+                        final afterImgBuffer = await FileUtil()
+                            .readRootBundle(demoImg.afterImgSrc);
                         GoRouter.of(context).go(
                           '/image_process',
                           extra: ProcessImgElement(
@@ -46,7 +43,8 @@ class MBExampleBodyWidget extends StatelessWidget {
                             processImg: ProcessImg.example(
                               beforeImg: beforeImgBuffer,
                               afterImg: afterImgBuffer,
-                              fileSize: beforeImgByte.lengthInBytes,
+                              fileSize: await FileUtil()
+                                  .fileSize(demoImg.beforeImgSrc),
                               createdAt: DateTime.now(),
                               updatedAt: DateTime.now(),
                               fileLastModifiedDate: DateTime.now(),
@@ -75,14 +73,10 @@ class MBExampleBodyWidget extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 15.0),
                     child: ExampleBodyWidget(
                       onTap: (demoImg) async {
-                        ByteData beforeImgByte = await rootBundle
-                            .load('assets/${demoImg.beforeImgSrc}');
-                        ByteData afterImgByte = await rootBundle
-                            .load('assets/${demoImg.afterImgSrc}');
-                        final beforeImgBuffer =
-                            beforeImgByte.buffer.asUint8List();
-                        final afterImgBuffer =
-                            afterImgByte.buffer.asUint8List();
+                        final beforeImgBuffer = await FileUtil()
+                            .readRootBundle(demoImg.beforeImgSrc);
+                        final afterImgBuffer = await FileUtil()
+                            .readRootBundle(demoImg.afterImgSrc);
                         GoRouter.of(context).go(
                           '/image_process',
                           extra: ProcessImgElement(
@@ -90,7 +84,8 @@ class MBExampleBodyWidget extends StatelessWidget {
                             processImg: ProcessImg.example(
                               beforeImg: beforeImgBuffer,
                               afterImg: afterImgBuffer,
-                              fileSize: beforeImgByte.lengthInBytes,
+                              fileSize: await FileUtil()
+                                  .fileSize(demoImg.beforeImgSrc),
                               createdAt: DateTime.now(),
                               updatedAt: DateTime.now(),
                               fileLastModifiedDate: DateTime.now(),

@@ -17,11 +17,35 @@ class MBDemoWidget extends StatelessWidget {
 
   double widgetHeight(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    return width < 350
-        ? 850
-        : width < 450
-            ? 800
-            : 700;
+    return width < 400
+        ? 500
+        : width < 650
+            ? 600
+            : 750;
+  }
+
+  double titleFontSize(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    return width < 400
+        ? 35
+        : width < 650
+            ? 45
+            : 56;
+  }
+
+  double? dotBgPadding(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    return width < 450 ? 25 : null;
+  }
+
+  double animatedWidgetPadding(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    return width /
+        (width < 460
+            ? 6
+            : width < 550
+                ? 5
+                : 4);
   }
 
   @override
@@ -39,8 +63,8 @@ class MBDemoWidget extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(
+                  Padding(
+                    padding: const EdgeInsets.only(
                       bottom: 10.0,
                     ),
                     child: Text(
@@ -48,7 +72,7 @@ class MBDemoWidget extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.black54,
                         fontWeight: FontWeight.bold,
-                        fontSize: 56,
+                        fontSize: titleFontSize(context),
                       ),
                     ),
                   ),
@@ -57,9 +81,11 @@ class MBDemoWidget extends StatelessWidget {
                     child: Stack(
                       alignment: AlignmentDirectional.center,
                       children: [
-                        const Positioned(
+                        Positioned(
                           top: 20,
-                          child: Opacity(
+                          left: dotBgPadding(context),
+                          right: dotBgPadding(context),
+                          child: const Opacity(
                             opacity: 0.25,
                             child: EnvImgWidget(
                               src: 'dot_bg.webp',
@@ -73,7 +99,7 @@ class MBDemoWidget extends StatelessWidget {
                           child: Padding(
                             padding: EdgeInsets.symmetric(
                               vertical: 10,
-                              horizontal: MediaQuery.of(context).size.width / 4,
+                              horizontal: animatedWidgetPadding(context),
                             ),
                             child: AnimatedDemoDisplayWidget(
                               key: const Key('MB-AnimatedDemoDisplayWidget'),

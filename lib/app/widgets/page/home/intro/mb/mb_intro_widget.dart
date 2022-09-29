@@ -31,22 +31,54 @@ class _DTIntroWidget extends State<MBIntroWidget> {
       showSubTitleNotifi.dispose();
       showBodyNotifi.dispose();
     }
-    showTitleNotifi.dispose();
-    showSubTitleNotifi.dispose();
-    showBodyNotifi.dispose();
     super.dispose();
   }
 
   double widgetHeight(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    return width < 650 ? 1300 : 1100;
+    return width < 355
+        ? 750
+        : width < 450
+            ? 800
+            : width < 650
+                ? 1000
+                : 1125;
   }
 
-  double titleHeight(BuildContext context) {
+  double widgetVerticalPadding(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    return height < 850
-        ? MediaQuery.of(context).size.height / 6.5
-        : MediaQuery.of(context).size.height / 3.5;
+    final width = MediaQuery.of(context).size.width;
+    return width < 450
+        ? 75
+        : width < 650
+            ? 85
+            : height < 850
+                ? MediaQuery.of(context).size.height / 6.5
+                : MediaQuery.of(context).size.height / 3.5;
+  }
+
+  double titleFontSize(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    return width < 450 ? 28 : 36;
+  }
+
+  double subTitleFontSize(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    return width < 450 ? 18 : 30;
+  }
+
+  double bodyTitleFontSize(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    return width < 450 ? 16 : 28;
+  }
+
+  double arrowHeight(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    return width < 400
+        ? 110
+        : width < 500
+            ? 130
+            : 145;
   }
 
   @override
@@ -60,7 +92,7 @@ class _DTIntroWidget extends State<MBIntroWidget> {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              top: titleHeight(context),
+              top: widgetVerticalPadding(context),
             ),
             child: Column(
               children: [
@@ -68,8 +100,8 @@ class _DTIntroWidget extends State<MBIntroWidget> {
                   text: "Fast AI automatic Face Smoothing!",
                   showNotifi: showTitleNotifi,
                   onFinished: () => showSubTitleNotifi.value = true,
-                  textStyle: const TextStyle(
-                    fontSize: 36.0,
+                  textStyle: TextStyle(
+                    fontSize: titleFontSize(context),
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
@@ -81,10 +113,10 @@ class _DTIntroWidget extends State<MBIntroWidget> {
                   text: "Flutter Web integrate with native platform OpenCV",
                   showNotifi: showSubTitleNotifi,
                   onFinished: () => showBodyNotifi.value = true,
-                  textStyle: const TextStyle(
-                    fontSize: 30.0,
+                  textStyle: TextStyle(
+                    fontSize: subTitleFontSize(context),
                     color: Colors.black54,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(
@@ -102,10 +134,10 @@ class _DTIntroWidget extends State<MBIntroWidget> {
                       () => showTitleNotifi.value = true,
                     );
                   },
-                  textStyle: const TextStyle(
-                    fontSize: 30.0,
-                    color: Colors.black54,
-                    fontWeight: FontWeight.bold,
+                  textStyle: TextStyle(
+                    fontSize: bodyTitleFontSize(context),
+                    color: Colors.black38,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
@@ -121,10 +153,10 @@ class _DTIntroWidget extends State<MBIntroWidget> {
                         width: MediaQuery.of(context).size.width / 1.50,
                         title: 'Before',
                       ),
-                      const SizedBox(
+                      SizedBox(
                         width: 200,
-                        height: 150,
-                        child: Padding(
+                        height: arrowHeight(context),
+                        child: const Padding(
                           padding: EdgeInsets.symmetric(
                             vertical: 25.0,
                             horizontal: 50.0,

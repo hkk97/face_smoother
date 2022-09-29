@@ -3,6 +3,15 @@ import 'package:flutter/material.dart';
 class MBSubtitleWidget extends StatelessWidget {
   const MBSubtitleWidget({super.key});
 
+  double subTitleFontSize(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    return width < 400
+        ? 25
+        : width < 650
+            ? 29
+            : 36;
+  }
+
   @override
   Widget build(context) {
     final onVertical = MediaQuery.of(context).size.width < 800;
@@ -10,14 +19,14 @@ class MBSubtitleWidget extends StatelessWidget {
         ? Center(
             child: Column(
               children: [
-                const Text(
+                Text(
                   "100% Automatically and ",
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Colors.black87,
                     overflow: TextOverflow.fade,
-                    fontSize: 36,
+                    fontSize: subTitleFontSize(context),
                   ),
                 ),
                 SizedBox(
@@ -25,12 +34,12 @@ class MBSubtitleWidget extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+                      Text(
                         "Free",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 36,
+                          fontSize: subTitleFontSize(context),
                           fontWeight: FontWeight.bold,
                         ),
                       ),

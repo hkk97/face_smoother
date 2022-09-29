@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:html' as html;
-import 'dart:typed_data';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_smoother_plguin_example/app/models/img_process/img_process.dart';
 import 'package:flutter_web_smoother_plguin_example/app/models/img_process/process_img_element.dart';
 import 'package:flutter_web_smoother_plguin_example/app/ser/app/app_ser.dart';
+import 'package:flutter_web_smoother_plguin_example/app/util/file_util.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/common/custom_appbar/custom_appbar.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/common/upload_term_widget.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/drop_zone_widget.dart';
@@ -26,9 +26,11 @@ class ImageProcessPage extends StatefulWidget {
 
 class _ImageProcessState extends State<ImageProcessPage> with AfterLayoutMixin {
   late ProcessImgElement? currImgElement;
+  late ScrollController scrollController;
 
   @override
   void initState() {
+    scrollController = ScrollController();
     if (widget.processImgElement != null) {
       currImgElement = widget.processImgElement!;
     }
@@ -37,7 +39,13 @@ class _ImageProcessState extends State<ImageProcessPage> with AfterLayoutMixin {
 
   @override
   void dispose() {
+    scrollController.dispose();
     super.dispose();
+  }
+
+  double horizontalPadding(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    return width < 500 ? 15 : width / 2 - 400 / 2;
   }
 
   @override
@@ -48,6 +56,7 @@ class _ImageProcessState extends State<ImageProcessPage> with AfterLayoutMixin {
           loadScriptNotifi: AppSer().faceSmoother().loadScriptNotifi,
         ),
         body: NestedScrollView(
+          controller: scrollController,
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverToBoxAdapter(
@@ -57,8 +66,8 @@ class _ImageProcessState extends State<ImageProcessPage> with AfterLayoutMixin {
                       padding: const EdgeInsets.only(top: 35, bottom: 25),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: MediaQuery.of(context).size.width / 2 -
-                                400 / 2),
+                          horizontal: horizontalPadding(context),
+                        ),
                         child: SizedBox(
                           height: 350.0,
                           width: 400.0,
@@ -83,21 +92,18 @@ class _ImageProcessState extends State<ImageProcessPage> with AfterLayoutMixin {
                     ),
                     ExampleWidget(
                       onTap: (demoImg) async {
-                        ByteData beforeImgByte = await rootBundle
-                            .load('assets/${demoImg.beforeImgSrc}');
-                        ByteData afterImgByte = await rootBundle
-                            .load('assets/${demoImg.afterImgSrc}');
-                        final beforeImgBuffer =
-                            beforeImgByte.buffer.asUint8List();
-                        final afterImgBuffer =
-                            afterImgByte.buffer.asUint8List();
+                        final beforeImgBuffer = await FileUtil()
+                            .readRootBundle(demoImg.beforeImgSrc);
+                        final afterImgBuffer = await FileUtil()
+                            .readRootBundle(demoImg.afterImgSrc);
                         await AppSer().dbSer().imgDBSer().write(
                               img: ProcessImg.example(
                                 beforeImg: beforeImgBuffer,
                                 afterImg: afterImgBuffer,
                                 createdAt: DateTime.now(),
                                 updatedAt: DateTime.now(),
-                                fileSize: beforeImgByte.lengthInBytes,
+                                fileSize: await FileUtil()
+                                    .fileSize(demoImg.beforeImgSrc),
                                 fileLastModifiedDate: DateTime.now(),
                               ),
                             );
@@ -115,7 +121,7 @@ class _ImageProcessState extends State<ImageProcessPage> with AfterLayoutMixin {
               ),
             ];
           },
-          body: const ImageProcessListView(),
+          body: ImageProcessListView(),
         ),
       ),
     );

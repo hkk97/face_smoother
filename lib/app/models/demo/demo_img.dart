@@ -1,7 +1,3 @@
-import 'package:flutter/services.dart';
-import 'package:flutter_web_smoother_plguin_example/app/ser/app/app_ser.dart';
-import 'package:flutter_web_smoother_plguin_example/app/ser/app/env_ser.dart';
-
 class DemoImg {
   final String beforeImgSrc;
   final String afterImgSrc;

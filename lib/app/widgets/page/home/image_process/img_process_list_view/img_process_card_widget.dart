@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web_smoother_plguin_example/app/const/app_enum.dart';
 import 'package:flutter_web_smoother_plguin_example/app/models/img_process/img_process.dart';
-import 'package:flutter_web_smoother_plguin_example/app/models/img_process/img_process_btn.dart';
 import 'package:flutter_web_smoother_plguin_example/app/util/file_util.dart';
-import 'package:flutter_web_smoother_plguin_example/app/widgets/common/btn/hover_underline_widget.dart';
+import 'package:flutter_web_smoother_plguin_example/app/widgets/page/home/image_process/img_process_list_view/img_process_func_bar.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/page/home/image_process/img_process_list_view/img_process_img_widget.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/page/home/image_process/img_process_list_view/img_process_info_widget.dart';
 
@@ -23,12 +22,16 @@ class ImgProcessCardWidget extends StatefulWidget {
 class _ImgProcessCardState extends State<ImgProcessCardWidget> {
   late ValueNotifier<SelectedMode> selectedModeNotifi;
 
-  double horizontalPadding(BuildContext context) =>
-      MediaQuery.of(context).size.width < 750
-          ? MediaQuery.of(context).size.width / 15.0
-          : MediaQuery.of(context).size.width < 900
-              ? MediaQuery.of(context).size.width / 10.0
-              : MediaQuery.of(context).size.width / 5.5;
+  double horizontalPadding(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    return width < 550
+        ? width / 25.0
+        : width < 750
+            ? width / 15.0
+            : width < 900
+                ? width / 10.0
+                : width / 5.5;
+  }
 
   @override
   void initState() {
@@ -55,74 +58,11 @@ class _ImgProcessCardState extends State<ImgProcessCardWidget> {
           elevation: 15.0,
           child: Column(
             children: [
-              ValueListenableBuilder<SelectedMode>(
-                valueListenable: selectedModeNotifi,
-                builder: ((context, mode, child) {
-                  return Padding(
-                    padding: const EdgeInsets.only(
-                      top: 20,
-                      left: 25,
-                      right: 25,
-                      bottom: 15.0,
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: ImgProcessBtn.values
-                                  .map(
-                                    (value) => HoverUnderlineWidget(
-                                      text: value.name,
-                                      isSelect: mode == value.mode,
-                                      onTap: () =>
-                                          selectedModeNotifi.value = value.mode,
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                widget.imgProcess.isValidMedia
-                                    ? GestureDetector(
-                                        onTap: () => FileUtil().downImg(
-                                            widget.imgProcess.afterImg!),
-                                        child: const Tooltip(
-                                          message: 'Download filtered image',
-                                          padding: EdgeInsets.all(5.5),
-                                          child: Icon(
-                                            Icons.download,
-                                            size: 30.0,
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                      )
-                                    : const SizedBox(),
-                                const SizedBox(
-                                  width: 15,
-                                ),
-                                GestureDetector(
-                                  onTap: () => widget.onClose(),
-                                  child: const Tooltip(
-                                    message: 'Close',
-                                    padding: EdgeInsets.all(5.5),
-                                    child: Icon(
-                                      Icons.close,
-                                      size: 30.0,
-                                      color: Colors.black54,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                }),
+              ImgProcessFuncBar(
+                key: UniqueKey(),
+                imgProcess: widget.imgProcess,
+                selectedModeNotifi: selectedModeNotifi,
+                onClose: () => widget.onClose(),
               ),
               const Divider(
                 height: 1,

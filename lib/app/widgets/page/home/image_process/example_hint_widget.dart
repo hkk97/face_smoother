@@ -27,8 +27,7 @@ class ExampleHintWidget extends StatelessWidget {
               ),
             ],
           )
-        : Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+        : Wrap(
             children: const [
               Text(
                 "Without Images? ",

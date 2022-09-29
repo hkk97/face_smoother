@@ -31,6 +31,11 @@ class _HoverUnderlineState extends State<HoverUnderlineWidget> {
     super.dispose();
   }
 
+  double fontSize(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    return width < 550 ? 18 : 24;
+  }
+
   @override
   Widget build(context) {
     return GestureDetector(
@@ -53,7 +58,7 @@ class _HoverUnderlineState extends State<HoverUnderlineWidget> {
                           : Colors.black,
                   fontWeight:
                       widget.isSelect ? FontWeight.bold : FontWeight.normal,
-                  fontSize: 24.0,
+                  fontSize: fontSize(context),
                 ),
               ),
             );

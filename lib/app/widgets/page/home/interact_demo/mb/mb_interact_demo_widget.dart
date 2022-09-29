@@ -16,6 +16,11 @@ class MBInteractDemoWidget extends StatelessWidget {
     return width < 750 ? 20 : 5;
   }
 
+  double titleFontSize(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    return width < 450 ? 28 : 36;
+  }
+
   @override
   Widget build(context) {
     final demoImg = DemoImg.interact();
@@ -29,11 +34,11 @@ class MBInteractDemoWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
+            Text(
               "Amazing Quality",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 46.0,
+                fontSize: titleFontSize(context),
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),

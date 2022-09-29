@@ -18,6 +18,10 @@ class ImageProcessListView extends StatelessWidget {
                   bottom: 25.0,
                 ),
                 child: ListView.custom(
+                  shrinkWrap: true,
+                  physics: const AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics(),
+                  ),
                   cacheExtent: 15.0,
                   childrenDelegate: SliverChildBuilderDelegate(
                     (context, index) {

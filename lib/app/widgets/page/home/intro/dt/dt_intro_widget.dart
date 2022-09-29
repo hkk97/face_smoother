@@ -31,9 +31,6 @@ class _DTIntroWidget extends State<DTIntroWidget> {
       showSubTitleNotifi.dispose();
       showBodyNotifi.dispose();
     }
-    showTitleNotifi.dispose();
-    showSubTitleNotifi.dispose();
-    showBodyNotifi.dispose();
     super.dispose();
   }
 
@@ -84,7 +81,7 @@ class _DTIntroWidget extends State<DTIntroWidget> {
                   textStyle: const TextStyle(
                     fontSize: 30.0,
                     color: Colors.black54,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(
@@ -103,9 +100,9 @@ class _DTIntroWidget extends State<DTIntroWidget> {
                     );
                   },
                   textStyle: const TextStyle(
-                    fontSize: 30.0,
-                    color: Colors.black54,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 28.0,
+                    color: Colors.black38,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
