@@ -38,6 +38,7 @@ dependencies:
   image_whisperer:
   sliver_tools: ^0.2.8
   file_picker: ^5.2.0+1
+  universal_io: ^2.0.4
 
 dev_dependencies:
   flutter_test:

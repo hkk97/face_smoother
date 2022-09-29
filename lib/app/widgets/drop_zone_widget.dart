@@ -11,6 +11,7 @@ import 'package:flutter_web_smoother_plguin_example/app/ser/app/overlay_ser.dart
 import 'package:flutter_web_smoother_plguin_example/app/util/file_util.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/overlay/overlay_loading.dart';
 import 'package:image_whisperer/image_whisperer.dart';
+import 'package:universal_io/io.dart';
 
 class DropFileWidget extends StatefulWidget {
   final ValueChanged<ProcessImgElement> onDroppedFile;
@@ -131,7 +132,12 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
     final processImgElement = ProcessImgElement(
       imgElement: imgElement,
       processImg: processImg,
-    );
+    );  
+    final tempFile = File.fromRawPath(file.bytes!);
+    debugPrint("[Check]:[tempFilePath]");
+    debugPrint(tempFile.path.toString());
+    debugPrint(tempFile.uri.toString());
+    debugPrint(tempFile.uri.toFilePath().toString());
     await AppSer().dbSer().imgDBSer().write(img: processImg);
     widget.onDroppedFile(processImgElement);
     await OverlaySer().removeOverlay('loadingOverlay');
@@ -152,6 +158,8 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
       final url = await controller.createFileUrl(event);
       final fileMine = await controller.getFileMIME(event);
       final isFileValid = FileUtil().isAllowedImgType(fileMine);
+      debugPrint("[onDropFile]");
+      debugPrint(url.toString());
       if (isFileValid) {
         var blob = BlobImage(file, name: file.name).blob;
         var r = html.FileReader();
