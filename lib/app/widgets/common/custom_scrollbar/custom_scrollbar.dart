@@ -17,7 +17,10 @@ class CustomScrollBar extends StatelessWidget {
       thickness: 5,
       radius: const Radius.circular(20),
       thumbVisibility: true,
-      child: child,
+      child: ScrollConfiguration(
+        behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+        child: child,
+      ),
     );
   }
 }

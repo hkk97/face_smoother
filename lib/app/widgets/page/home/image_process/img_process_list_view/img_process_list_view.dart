@@ -17,31 +17,42 @@ class ImageProcessListView extends StatelessWidget {
                 padding: const EdgeInsets.only(
                   bottom: 25.0,
                 ),
-                child: ListView.custom(
-                  shrinkWrap: true,
-                  physics: const AlwaysScrollableScrollPhysics(
-                    parent: BouncingScrollPhysics(),
-                  ),
-                  cacheExtent: 15.0,
-                  childrenDelegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      ProcessImg imgProcess = imgs[imgs.length - 1 - index];
-                      return ImgProcessCardWidget(
-                        key: ValueKey(imgProcess.createdAt!.toIso8601String()),
-                        imgProcess: imgProcess,
-                        onClose: () => AppSer().dbSer().imgDBSer().delete(
-                              img: imgProcess,
-                            ),
-                      );
-                    },
-                    childCount: imgs.length,
-                    findChildIndexCallback: ((key) {
-                      final valueKey = key as ValueKey<String>;
-                      final val = imgs.indexWhere((element) =>
-                          element.createdAt.toIso8601String() ==
-                          valueKey.value);
-                      return imgs.length - 1 - val;
-                    }),
+                child: RawScrollbar(
+                  thumbColor: Colors.greenAccent,
+                  thickness: 5,
+                  radius: const Radius.circular(20),
+                  thumbVisibility: true,
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(context)
+                        .copyWith(scrollbars: false),
+                    child: ListView.custom(
+                      shrinkWrap: true,
+                      physics: const AlwaysScrollableScrollPhysics(
+                        parent: BouncingScrollPhysics(),
+                      ),
+                      cacheExtent: 15.0,
+                      childrenDelegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          ProcessImg imgProcess = imgs[imgs.length - 1 - index];
+                          return ImgProcessCardWidget(
+                            key: ValueKey(
+                                imgProcess.createdAt!.toIso8601String()),
+                            imgProcess: imgProcess,
+                            onClose: () => AppSer().dbSer().imgDBSer().delete(
+                                  img: imgProcess,
+                                ),
+                          );
+                        },
+                        childCount: imgs.length,
+                        findChildIndexCallback: ((key) {
+                          final valueKey = key as ValueKey<String>;
+                          final val = imgs.indexWhere((element) =>
+                              element.createdAt.toIso8601String() ==
+                              valueKey.value);
+                          return imgs.length - 1 - val;
+                        }),
+                      ),
+                    ),
                   ),
                 ),
               );
