@@ -77,6 +77,7 @@ class _ImageProcessState extends State<ImageProcessPage> with AfterLayoutMixin {
                                 currImgElement = processImgElement;
                                 await smoothFilter(
                                   imageElement: processImgElement.imgElement!,
+                                  context: context,
                                   imgCallBack: (uin8List) async {
                                     await AppSer().dbSer().imgDBSer().update(
                                           prcessImg: currImgElement!.processImg
@@ -157,6 +158,7 @@ class _ImageProcessState extends State<ImageProcessPage> with AfterLayoutMixin {
             widget.processImgElement!.imgElement != null) {
           await smoothFilter(
             imageElement: widget.processImgElement!.imgElement!,
+            context: context,
             imgCallBack: (uin8List) async {
               await AppSer().dbSer().imgDBSer().update(
                     prcessImg: currImgElement!.processImg.copyWith(uin8List),
