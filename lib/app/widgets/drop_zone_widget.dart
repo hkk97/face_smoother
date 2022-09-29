@@ -38,6 +38,7 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
           Positioned.fill(
             child: GestureDetector(
               onTap: () async {
+                debugPrint("controller.pickFiles");
                 final events = await controller.pickFiles();
                 if (events.isEmpty) return;
                 uploadedFile(events.first);
