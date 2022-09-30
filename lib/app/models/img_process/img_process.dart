@@ -28,7 +28,7 @@ class ProcessImg {
     this.afterImg,
     required this.createdAt,
     this.updatedAt,
-    required this.fileLastModifiedDate,
+    this.fileLastModifiedDate,
     required this.fileName,
     this.fileSize,
     this.isExample = false,
@@ -63,6 +63,20 @@ class ProcessImg {
       'afterImg': afterImg == null || afterImg!.isEmpty ? '' : afterImg,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt == null ? '' : updatedAt!.toIso8601String(),
+      'fileLastModifiedDate': fileLastModifiedDate != null ? fileLastModifiedDate!.toIso8601String() : '',
+      'fileName': fileName,
+      'fileSize': fileSize,
+      'isExample': isExample,
+      'isValidMedia': isValidMedia,
+    };
+  }
+
+    Map<String, Object?> checkJson() {
+    return {
+      'beforeImg': beforeImg == null || beforeImg!.isEmpty ? '' : beforeImg.toString().substring(0,15),
+      'afterImg': afterImg == null || afterImg!.isEmpty ? '' : afterImg.toString().substring(0,15),
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt == null ? '' : updatedAt!.toIso8601String(),
       'fileLastModifiedDate': fileLastModifiedDate!.toIso8601String(),
       'fileName': fileName,
       'fileSize': fileSize,
@@ -70,6 +84,7 @@ class ProcessImg {
       'isValidMedia': isValidMedia,
     };
   }
+
 
   ProcessImg copyWith(
     Uint8List? afterImg,

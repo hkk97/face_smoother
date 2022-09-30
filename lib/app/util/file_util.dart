@@ -18,7 +18,15 @@ class FileUtil {
     'image/webp'
   ];
 
+  static List<String> allowedExtensinos =[
+    'jpeg',
+    'png',
+    'jpg',
+    'webp',
+  ];
+
   bool isAllowedImgType(String type) => allowedTypes.contains(type);
+  bool isAllowedImgExtension(String extension) => allowedExtensinos.contains(extension);
 
   void downImg(Uint8List uint8list) {
     final base64 = base64Encode(uint8list);

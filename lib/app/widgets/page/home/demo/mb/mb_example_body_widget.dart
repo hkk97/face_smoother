@@ -48,7 +48,7 @@ class MBExampleBodyWidget extends StatelessWidget {
                               createdAt: DateTime.now(),
                               updatedAt: DateTime.now(),
                               fileLastModifiedDate: DateTime.now(),
-                            ),
+                            ), imgSrc: null,
                           ),
                         );
                       },
@@ -89,7 +89,7 @@ class MBExampleBodyWidget extends StatelessWidget {
                               createdAt: DateTime.now(),
                               updatedAt: DateTime.now(),
                               fileLastModifiedDate: DateTime.now(),
-                            ),
+                            ), imgSrc: null,
                           ),
                         );
                       },

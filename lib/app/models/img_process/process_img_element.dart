@@ -3,9 +3,11 @@ import 'package:flutter_web_smoother_plguin_example/app/models/img_process/img_p
 
 class ProcessImgElement {
   final html.ImageElement? imgElement;
+  final String? imgSrc;
   final ProcessImg processImg;
 
   ProcessImgElement({
+    required this.imgSrc,
     required this.imgElement,
     required this.processImg,
   });

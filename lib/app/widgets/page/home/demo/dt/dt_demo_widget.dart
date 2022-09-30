@@ -235,7 +235,7 @@ class DTDemoWidget extends StatelessWidget {
                                               updatedAt: DateTime.now(),
                                               fileLastModifiedDate:
                                                   DateTime.now(),
-                                            ),
+                                            ), imgSrc: null,
                                           ),
                                         );
                                       },
