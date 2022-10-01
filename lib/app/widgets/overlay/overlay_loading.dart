@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_web_smoother_plguin_example/app/ser/app/overlay_ser.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -27,14 +29,27 @@ Future<void> showErrorOverlay(
         child: Scaffold(
       backgroundColor: Colors.black54,
       body: Center(
-        child: Text(
-          error,
-          style: TextStyle(
-            color: Colors.white,
-          ),
+        child: Card(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(error,
+            textAlign: TextAlign.center,
+           style: TextStyle(
+            color: Colors.black, 
+            fontWeight: FontWeight.bold,
+            ),
+            ),
+            TextButton(onPressed: (){
+              OverlaySer().removeOverlay('errorOverlay');
+            }, child: Text('Noticed', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,),)),
+
+            ],
+          )
         ),
       ),
-    )),
+    ),
+    ),
   );
-  OverlaySer().createOverlay(context, true, [overlayEntry], ['loadingOverlay']);
+  OverlaySer().createOverlay(context, true, [overlayEntry], ['errorOverlay']);
 }

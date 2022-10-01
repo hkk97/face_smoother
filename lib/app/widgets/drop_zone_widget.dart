@@ -241,7 +241,7 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
 
   Future<void> onDropFile(dynamic event) async {
     try {
-            await showOverlayLoading(context: context);
+      await showOverlayLoading(context: context);
       late ProcessImgElement processImgElement;
       late ProcessImg processImg;
       html.ImageElement? imgElement;
@@ -301,7 +301,7 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
         await OverlaySer().removeOverlay('loadingOverlay');
       }
     } catch (e){
-      debugPrint(e.toString());
+      showErrorOverlay(context: context, error: "Failed to process image with opencv.js, please use laptop or computer browser instead of mobile browser",);
     }
     
   }
