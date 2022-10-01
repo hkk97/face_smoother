@@ -240,7 +240,8 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
   
 
   Future<void> onDropFile(dynamic event) async {
-      await showOverlayLoading(context: context);
+    try {
+            await showOverlayLoading(context: context);
       late ProcessImgElement processImgElement;
       late ProcessImg processImg;
       html.ImageElement? imgElement;
@@ -252,6 +253,8 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
       final url = await controller.createFileUrl(event);
       final fileMine = await controller.getFileMIME(event);
       final isFileValid = FileUtil().isAllowedImgType(fileMine);
+      debugPrint("check with url");
+      debugPrint(url.toString());
       if (isFileValid) {
         var blob = BlobImage(file, name: file.name).blob;
         var r = html.FileReader();
@@ -297,6 +300,9 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
         widget.onDroppedFile(processImgElement);
         await OverlaySer().removeOverlay('loadingOverlay');
       }
+    } catch (e){
+      debugPrint(e.toString());
+    }
     
   }
 
