@@ -29,23 +29,44 @@ Future<void> showErrorOverlay(
         child: Scaffold(
       backgroundColor: Colors.black54,
       body: Center(
-        child: Card(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(error,
-            textAlign: TextAlign.center,
-           style: TextStyle(
-            color: Colors.black, 
-            fontWeight: FontWeight.bold,
-            ),
-            ),
-            TextButton(onPressed: (){
-              OverlaySer().removeOverlay('errorOverlay');
-            }, child: Text('Noticed', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,),)),
+        child: SizedBox(
+          height: 200,
+          width: 250,
+          child: Card(
+            elevation: 15.0,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(error,
+              textAlign: TextAlign.center,
+             style: TextStyle(
+              color: Colors.black, 
+              fontWeight: FontWeight.bold,
+              ),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 15.0,
+                            horizontal: MediaQuery.of(context).size.width < 350
+                                ? 15
+                                : 35.0,
+                          ),
+                        ), onPressed: () { 
+                                          OverlaySer().removeOverlay('errorOverlay');
+                         },
+                        child: Text('Noticed', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,),),),
 
-            ],
-          )
+              ],
+            )
+          ),
         ),
       ),
     ),

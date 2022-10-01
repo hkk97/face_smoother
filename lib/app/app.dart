@@ -1,9 +1,13 @@
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_smoother_plguin_example/app/models/img_process/process_img_element.dart';
 import 'package:flutter_web_smoother_plguin_example/app/page/home/home_page.dart';
 import 'package:flutter_web_smoother_plguin_example/app/page/image_process/image_process_page.dart';
 import 'package:flutter_web_smoother_plguin_example/app/page/privacy/privacy_page.dart';
 import 'package:flutter_web_smoother_plguin_example/app/page/term_of_service/term_of_service_page.dart';
+import 'package:flutter_web_smoother_plguin_example/app/widgets/overlay/overlay_loading.dart';
 import 'package:go_router/go_router.dart';
 
 class App extends StatefulWidget {
@@ -13,7 +17,7 @@ class App extends StatefulWidget {
   State<App> createState() => _AppState();
 }
 
-class _AppState extends State<App> {
+class _AppState extends State<App> with AfterLayoutMixin{
   final String appTitle = 'Face Smoother';
 
   final GoRouter _router = GoRouter(
@@ -56,5 +60,9 @@ class _AppState extends State<App> {
       theme: Theme.of(context).copyWith(primaryColor: Colors.white),
       routerConfig: _router,
     );
+  }
+
+  @override
+  FutureOr<void> afterFirstLayout(context) async{
   }
 }
