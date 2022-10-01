@@ -8,6 +8,8 @@ import 'package:flutter_web_smoother_plguin_example/app/models/img_process/proce
 import 'package:flutter_web_smoother_plguin_example/app/ser/app/app_ser.dart';
 import 'package:flutter_web_smoother_plguin_example/app/ser/app/overlay_ser.dart';
 import 'package:flutter_web_smoother_plguin_example/app/util/file_util.dart';
+import 'package:flutter_web_smoother_plguin_example/app/widgets/overlay/img_proces_error_overlay.dart';
+import 'package:flutter_web_smoother_plguin_example/app/widgets/overlay/img_process_loading_overlay.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/overlay/overlay_loading.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 import 'package:image_whisperer/image_whisperer.dart';
@@ -116,134 +118,11 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
     );
   }
 
-    Future<void> onPickFile(html.File file) async {
-     await showOverlayLoading(context: context);
-      late ProcessImgElement processImgElement;
-      late ProcessImg processImg;
-      html.ImageElement? imgElement;
-      Uint8List? uint8list;
-      DateTime? lastModifiedDate = file.lastModifiedDate;
-      String fileName = file.name;
-      int fileSize = file.size;
-      final url = await controller.createFileUrl(file);
-      final fileMine = await controller.getFileMIME(file);
-      final isFileValid = FileUtil().isAllowedImgType(fileMine);
-      if (isFileValid) {
-        var blob = BlobImage(file, name: file.name).blob;
-        var r = html.FileReader();
-        r.readAsArrayBuffer(blob);
-        r.onLoad.listen((e) {
-          var data = r.result;
-          uint8list = data as Uint8List?;
-          processImg = ProcessImg(
-            createdAt: DateTime.now(),
-            fileLastModifiedDate: lastModifiedDate,
-            fileName: fileName,
-            fileSize: fileSize,
-            beforeImg: isFileValid ? uint8list! : null,
-            isValidMedia: isFileValid,
-          );
-        });
-        imgElement = html.ImageElement(src: url);
-        await imgElement.onLoad.first.then((element) async {
-          processImgElement = ProcessImgElement(
-            imgSrc: url,
-            imgElement: isFileValid ? imgElement : null,
-            processImg: processImg,
-          );
-          await AppSer().dbSer().imgDBSer().write(img: processImg);
-          widget.onDroppedFile(processImgElement);
-          await OverlaySer().removeOverlay('loadingOverlay');
-        });
-
-      } else {
-        processImg = ProcessImg(
-          createdAt: DateTime.now(),
-          fileLastModifiedDate: lastModifiedDate,
-          fileName: fileName,
-          fileSize: fileSize,
-          isValidMedia: false,
-        );
-        processImgElement = ProcessImgElement(
-          imgElement: null,
-          imgSrc: null,
-          processImg: processImg,
-        );
-        await AppSer().dbSer().imgDBSer().write(img: processImg);
-        widget.onDroppedFile(processImgElement);
-        await OverlaySer().removeOverlay('loadingOverlay');
-      }
-  }
-
-  // Future<void> onPickFile(PlatformFile file) async {
-  //   await showOverlayLoading(context: context);
-  //   late ProcessImgElement processImgElement;
-  //   late ProcessImg processImg;
-  //   html.ImageElement? imgElement;
-  //   final isFileValid = FileUtil().isAllowedImgExtension(file.extension!);
-  //   if (isFileValid){
-  //       debugPrint("[file are valid]");
-  //       html.Blob refBlob = html.Blob(file.bytes!, 'image/png');
-  //       debugPrint(refBlob.type.toString());
-  //       final url =  html.Url.createObjectUrlFromBlob(refBlob);
-  //        processImg = ProcessImg(
-  //               createdAt: DateTime.now(),
-  //               fileLastModifiedDate: null,
-  //               fileName: file.name,
-  //               fileSize: file.size,
-  //               beforeImg: file.bytes,
-  //               isValidMedia: true, // Pre assume true
-  //             );
-  //       imgElement = html.ImageElement(src: url);
-  //       imgElement.onLoad;
-
-  //       //         await imgElement.onLoad.first.then((element) async {
-  //       //   processImgElement = ProcessImgElement(
-  //       //     imgSrc: url,
-  //       //     imgElement: isFileValid ? imgElement : null,
-  //       //     processImg: processImg,
-  //       //   );
-  //       //   await AppSer().dbSer().imgDBSer().write(img: processImg);
-  //       //   widget.onDroppedFile(processImgElement);
-  //       //   await OverlaySer().removeOverlay('loadingOverlay');
-  //       // });
-  //       processImgElement = ProcessImgElement(
-  //         imgSrc: url,
-  //         imgElement: isFileValid ? imgElement : null,
-  //         processImg: processImg,
-  //       );
-  //       await AppSer().dbSer().imgDBSer().write(img: processImg);
-  //       widget.onDroppedFile(processImgElement);
-  //       await OverlaySer().removeOverlay('loadingOverlay');
-  //       debugPrint("imgElementWidth");
-  //                     debugPrint(imgElement.width.toString());
-
-  //   } else {
-  //       processImg = ProcessImg(
-  //         createdAt: DateTime.now(),
-  //         fileLastModifiedDate: null,
-  //         fileName: file.name,
-  //         fileSize: file.size,
-  //         isValidMedia: false,
-  //       );
-  //       processImgElement = ProcessImgElement(
-  //         imgElement: null,
-  //         imgSrc: null,
-  //         processImg: processImg,
-  //       );
-  //       await AppSer().dbSer().imgDBSer().write(img: processImg);
-  //       widget.onDroppedFile(processImgElement);
-  //       await OverlaySer().removeOverlay('loadingOverlay');
-  //   }
-  // }
-
-  
-
   Future<void> onDropFile(dynamic event) async {
+    await showImgProcessLoadingOverlay(context: context);
+    late ProcessImgElement processImgElement;
+    late ProcessImg processImg;
     try {
-      await showOverlayLoading(context: context);
-      late ProcessImgElement processImgElement;
-      late ProcessImg processImg;
       html.ImageElement? imgElement;
       Uint8List? uint8list;
       html.File file = event;
@@ -253,8 +132,6 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
       final url = await controller.createFileUrl(event);
       final fileMine = await controller.getFileMIME(event);
       final isFileValid = FileUtil().isAllowedImgType(fileMine);
-      debugPrint("check with url");
-      debugPrint(url.toString());
       if (isFileValid) {
         var blob = BlobImage(file, name: file.name).blob;
         var r = html.FileReader();
@@ -301,9 +178,12 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
         await OverlaySer().removeOverlay('loadingOverlay');
       }
     } catch (e){
-      showErrorOverlay(context: context, error: "Failed to process image with opencv.js, please use laptop or computer browser instead of mobile browser",);
+      showImgProcssErrorOverlay(context: context);
+    } finally {
+              await AppSer().dbSer().imgDBSer().write(img: processImg);
+        widget.onDroppedFile(processImgElement);
+        await OverlaySer().removeOverlay('loadingOverlay');
     }
-    
   }
 
   Widget buildDecoration({required Widget child}) {

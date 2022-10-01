@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web_smoother_plguin_example/app/models/img_process/process_img_element.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/common/env_img_widget.dart';
-import 'package:flutter_web_smoother_plguin_example/app/widgets/drop_zone_widget.dart';
+import 'package:flutter_web_smoother_plguin_example/app/widgets/drop_file_widget/drop_file_widget.dart';
 
 class MBDropFileWidget extends StatelessWidget {
   final ValueChanged<ProcessImgElement> onDroppedFile;

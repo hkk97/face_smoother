@@ -9,7 +9,7 @@ import 'package:flutter_web_smoother_plguin_example/app/ser/app/app_ser.dart';
 import 'package:flutter_web_smoother_plguin_example/app/util/file_util.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/common/custom_appbar/custom_appbar.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/common/upload_term_widget.dart';
-import 'package:flutter_web_smoother_plguin_example/app/widgets/drop_zone_widget.dart';
+import 'package:flutter_web_smoother_plguin_example/app/widgets/drop_file_widget/drop_file_widget.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/page/home/image_process/example_widget.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/page/home/image_process/img_process_list_view/img_process_list_view.dart';
 

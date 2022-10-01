@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_smoother_plguin_example/app/ser/app/app_ser.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/common/custom_appbar/custom_appbar.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/common/custom_scrollbar/custom_scrollbar.dart';
-import 'package:flutter_web_smoother_plguin_example/app/widgets/overlay/overlay_loading.dart';
+import 'package:flutter_web_smoother_plguin_example/app/widgets/overlay/img_proces_error_overlay.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/page/home/demo/demo_widget.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/page/home/footbar/foot_bar_widget.dart';
 import 'package:flutter_web_smoother_plguin_example/app/widgets/page/home/interact_demo/interact_demo_widget.dart';
@@ -75,7 +75,6 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin{
 
   @override
   FutureOr<void> afterFirstLayout(BuildContext context) async{
-        showErrorOverlay(context: context, error: "Failed to process image with opencv.js, please use laptop or computer browser instead of mobile browser",);
-
+    showImgProcssErrorOverlay(context: context,);
   }
 }
