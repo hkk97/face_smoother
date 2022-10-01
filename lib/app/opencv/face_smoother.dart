@@ -22,7 +22,7 @@ class FaceSmoother {
         imgCallBack: imgCallBack,
       );
     } catch (e) {
-      // await showErrorOverlay(context: context, error: e.toString());
+      await showErrorOverlay(context: context, error: e.toString());
     }
   }
 

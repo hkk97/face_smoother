@@ -40,10 +40,9 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
           Positioned.fill(
             child: GestureDetector(
               onTap: () async {
-
                 html.File? imgFile = await ImagePickerWeb.getImageAsFile();
                 if (imgFile != null) {
-                  await onPickFile(imgFile);
+                  await onDropFile(imgFile);
                 }
 
               },
