@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin{
 
   @override
   FutureOr<void> afterFirstLayout(BuildContext context) async{
-        showErrorOverlay(context: context, error: "ShowErrorMessage",);
+        showErrorOverlay(context: context, error: "Failed to process image with opencv.js, please use laptop or computer browser instead of mobile browser",);
 
   }
 }
