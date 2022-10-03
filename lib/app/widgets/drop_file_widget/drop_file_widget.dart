@@ -177,12 +177,8 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
         await OverlaySer().removeOverlay('loadingOverlay');
       }
     } catch (e) {
-      isError = true;
-    } finally {
-      await AppSer().dbSer().imgDBSer().write(img: processImg);
-      widget.onDroppedFile(processImgElement);
       await OverlaySer().removeOverlay('loadingOverlay');
-      isError ? await showImgProcssErrorOverlay(context: context) : null;
+      await showImgProcssErrorOverlay(context: context);
     }
   }
 
