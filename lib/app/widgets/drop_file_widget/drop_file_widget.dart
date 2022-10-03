@@ -121,6 +121,7 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
     await showImgProcessLoadingOverlay(context: context);
     late ProcessImgElement processImgElement;
     late ProcessImg processImg;
+    bool isError = false;
     try {
       html.ImageElement? imgElement;
       Uint8List? uint8list;
@@ -176,11 +177,12 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
         await OverlaySer().removeOverlay('loadingOverlay');
       }
     } catch (e) {
-      showImgProcssErrorOverlay(context: context);
+      isError = true;
     } finally {
       await AppSer().dbSer().imgDBSer().write(img: processImg);
       widget.onDroppedFile(processImgElement);
       await OverlaySer().removeOverlay('loadingOverlay');
+      isError ? await showImgProcssErrorOverlay(context: context) : null;
     }
   }
 
