@@ -17,7 +17,7 @@ class App extends StatefulWidget {
   State<App> createState() => _AppState();
 }
 
-class _AppState extends State<App> with AfterLayoutMixin{
+class _AppState extends State<App> {
   final String appTitle = 'Face Smoother';
 
   final GoRouter _router = GoRouter(
@@ -60,9 +60,5 @@ class _AppState extends State<App> with AfterLayoutMixin{
       theme: Theme.of(context).copyWith(primaryColor: Colors.white),
       routerConfig: _router,
     );
-  }
-
-  @override
-  FutureOr<void> afterFirstLayout(context) async{
   }
 }

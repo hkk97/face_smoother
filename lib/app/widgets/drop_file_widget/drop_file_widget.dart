@@ -46,7 +46,6 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
                 if (imgFile != null) {
                   await onDropFile(imgFile);
                 }
-
               },
               child: Container(
                 color: Colors.transparent,
@@ -159,7 +158,6 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
           widget.onDroppedFile(processImgElement);
           await OverlaySer().removeOverlay('loadingOverlay');
         });
-
       } else {
         processImg = ProcessImg(
           createdAt: DateTime.now(),
@@ -177,12 +175,12 @@ class _DropZoneWidgetState extends State<DropFileWidget> {
         widget.onDroppedFile(processImgElement);
         await OverlaySer().removeOverlay('loadingOverlay');
       }
-    } catch (e){
+    } catch (e) {
       showImgProcssErrorOverlay(context: context);
     } finally {
-              await AppSer().dbSer().imgDBSer().write(img: processImg);
-        widget.onDroppedFile(processImgElement);
-        await OverlaySer().removeOverlay('loadingOverlay');
+      await AppSer().dbSer().imgDBSer().write(img: processImg);
+      widget.onDroppedFile(processImgElement);
+      await OverlaySer().removeOverlay('loadingOverlay');
     }
   }
 
