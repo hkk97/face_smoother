@@ -9,14 +9,14 @@ class Term {
   static final _preabmle = Term._(
     title: '1. Preamble',
     body: [
-      "Spotlight-Platform Limited (hereinafter referred to as the Operator) operates the website wchklaus.github.io/face_smoother/face_smoother/ a progressive web app application for face smothering. This platform used to demonstrate the usage the flutter web and dynamic js library injection. The ai behind of face smothering are using the OpenCV to achieve. These Terms of Use apply to all users of the platform wchklaus.github.io/face_smoother/face_smoother/(hereinafter: the User)."
+      "Spotlight-Platform Limited (hereinafter referred to as the Operator) operates the website hkk97.github.io/face_smoother/face_smoother/ a progressive web app application for face smothering. This platform used to demonstrate the usage the flutter web and dynamic js library injection. The ai behind of face smothering are using the OpenCV to achieve. These Terms of Use apply to all users of the platform hkk97.github.io/face_smoother/face_smoother/(hereinafter: the User)."
     ],
   );
 
   static final _rights = Term._(
     title: '2. Rights',
     body: [
-      "2.1. The User may use the platform which is accessible under wchklaus.github.io/face_smoother/face_smoother/ exclusively for non-commercial purposes. This means that all results from the platform (hereinafter: the Platform) may only be used privately. Use for (direct or indirect) commercial purposes is excluded.",
+      "2.1. The User may use the platform which is accessible under hkk97.github.io/face_smoother/face_smoother/ exclusively for non-commercial purposes. This means that all results from the platform (hereinafter: the Platform) may only be used privately. Use for (direct or indirect) commercial purposes is excluded.",
       "2.2. The Operator has the right to restrict the use of the Platform without giving reasons or to block Users."
     ],
   );
@@ -40,7 +40,7 @@ class Term {
   static final _condifentiallyAndDataProtection = Term._(
     title: '5. Confidentiality and data protection',
     body: [
-      "5.1. All data protection information is available to the User at wchklaus.github.io/face_smoother/face_smoother/privacy",
+      "5.1. All data protection information is available to the User at hkk97.github.io/face_smoother/face_smoother/privacy",
     ],
   );
 

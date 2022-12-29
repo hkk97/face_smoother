@@ -9,7 +9,7 @@ class DevConfig extends AppConfig {
 
 class ProdConfig extends AppConfig {
   @override
-  String get host => 'wchklaus.github.io/face_smoother/assets/assets/';
+  String get host => 'hkk97.github.io/face_smoother/assets/assets/';
   @override
   bool get enableHttps => true;
 }
