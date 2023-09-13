@@ -83,7 +83,7 @@ class DTDemoWidget extends StatelessWidget {
                         bottom: 15.0,
                       ),
                       child: Text(
-                        "Get Smooth Skin \nwthin Second",
+                        "Get Smooth Skin \nin Second",
                         style: TextStyle(
                           color: Colors.black54,
                           fontWeight: FontWeight.bold,
@@ -235,7 +235,8 @@ class DTDemoWidget extends StatelessWidget {
                                               updatedAt: DateTime.now(),
                                               fileLastModifiedDate:
                                                   DateTime.now(),
-                                            ), imgSrc: null,
+                                            ),
+                                            imgSrc: null,
                                           ),
                                         );
                                       },

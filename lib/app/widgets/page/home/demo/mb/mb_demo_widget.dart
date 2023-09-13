@@ -68,7 +68,7 @@ class MBDemoWidget extends StatelessWidget {
                       bottom: 10.0,
                     ),
                     child: Text(
-                      "Get Smooth Skin \nwthin Second",
+                      "Get Smooth Skin \nin Second",
                       style: TextStyle(
                         color: Colors.black54,
                         fontWeight: FontWeight.bold,
