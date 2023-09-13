@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="/face_smoother/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="msapplication-config" content='assets/browserconfig.xml'>
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Fltuter Face Smoother, Get Smooth Skin in Second. The Progressive Web Application uses Flutter to develop and integrate with the native platform OpenCV (.js) and do a series of image progressing.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Flutter Face Smoother">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="assets/favicon.ico" type="image/ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <link rel="manifest" href="assets/site.webmanifest">
+  
+  <title>Flutter Face Smoother, Get Smooth Skin within Second</title>
+  <link rel="icon" type="image/png" sizes="32x32" src="assets/favicon-32x32.png"/>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link href="assets/manifest.json" type="application/json"/>
+  <link href="https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap" rel="stylesheet">
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    const serviceWorkerVersion = "347314309";
+  </script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
+  <script async src="opencv.js" type="text/javascript" defer></script>
+</head>
+<body id='body'>
+  <h1 id='loader' data-text= "Fs"> Fs</h1>
+
+  <script>
+    window.addEventListener('load', function(ev) {
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        }
+      }).then(function(engineInitializer) {
+        return engineInitializer.initializeEngine();
+      }).then(function(appRunner) {
+        var webLoader = document.getElementById("loader");
+        webLoader.style.animationPlayState = 'paused';
+        webLoader.remove();
+        return appRunner.runApp();
+      });
+    });
+  </script>
+</body>
+</html>
