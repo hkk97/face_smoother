@@ -36,7 +36,7 @@ class ImageProcessListView extends StatelessWidget {
                           ProcessImg imgProcess = imgs[imgs.length - 1 - index];
                           return ImgProcessCardWidget(
                             key: ValueKey(
-                                imgProcess.createdAt!.toIso8601String()),
+                                imgProcess.createdAt.toIso8601String()),
                             imgProcess: imgProcess,
                             onClose: () => AppSer().dbSer().imgDBSer().delete(
                                   img: imgProcess,
